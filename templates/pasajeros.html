@@ -14,15 +14,23 @@
 <div class="card">
         <h1>Listado de Pasajeros</h1>
         <hr>
-        <div class="table-responsive py-2">
+        <nav class="table-responsive py-2">
+
+            <nav class="navbar navbar-dark bg-primary ">
+                <div></div>
+                <div class="form-inline my-2 my-lg-0">
+                    <a href="{% url 'pasajerosCreate' %}"  class="btn btn-info my-2 my-sm-0"><i class="bi-person-plus"></i> Crear</a>
+                </div>
+            </nav>
+
             <table class="table table-striped table-hover table-responsive-sa">
                 <thead>
                     <tr>
                         <th>#</th>
-                        <th>Cedula</th>
+                        <th>Cédula</th>
                         <th>Nombre</th>
                         <th>Apellido</th>
-                        <th>Telefono</th>
+                        <th>Teléfono</th>
                         <th>Imagen</th>
                         <th colspan="2">Opciones</th>
                     </tr>
@@ -34,15 +42,22 @@
                         <td>{{e.cedula}}</td>
                         <td>{{e.nombre}}</td>
                         <td>{{e.apellido}}</td>
-                        <td>{{e.telefono}}</td>
+                        <td>
+                            {% if e.telefono %}
+                                {{e.telefono}}
+                            {% endif %}
+                        </td>
                         
                         <td>
-                        {% load static %}
-                        <img src="{% static 'logo.png' %}" alt="Imagen no encontrada" width="65" height="50"><br>
-                        {{e.imagen}}
+                            {% if e.imagen %}
+                                <img src="{{ e.imagen.url }}" alt="Imagen no encontrada" width="65" height="50"><br>
+                            {% endif %}
                         </td>
                         <td>{{e.correo}}</td>
-                        <td><a href="{% url 'pasajerosEdit' e.id %}"  class="btn btn-info">Editar</a></td>
+                        <td>
+                            <a href="{% url 'pasajerosEdit' e.id %}"  class="btn btn-info"><i class="bi-pencil"></i> Editar</a>
+                            <a href="{% url 'pasajerosDelete' e.id %}"  class="btn btn-danger btn-delete"><i class="bi-trash"></i> Eliminar</a>
+                        </td>
                     </tr>
                     {% endfor %}
                 </tbody>
@@ -50,3 +65,16 @@
         </div>
         </div>
 {% endblock body %}
+
+{% block scripts %}
+    <script type="text/javascript">
+        $(function(){
+            $('.btn-delete').click(function(e){
+                if(confirm('¿Desea eliminar este pasajero?')){
+                    return true;
+                }
+                return false;
+            });
+        });
+    </script>
+{% endblock scripts %}

@@ -6,6 +6,8 @@ class Pasajero(models.Model):
 	imagen = models.ImageField(upload_to='img/%Y/%m/%d/')
 	apellido = models.CharField(max_length=30)
 	email = models.EmailField()
+	telefono = models.CharField(max_length=15, null=True, blank=True)
+
 	def __str__(self):
 		return self.cedula
 

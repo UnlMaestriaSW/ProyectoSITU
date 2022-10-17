@@ -16,12 +16,17 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from django.urls import include
-from appSITUweb.views import *
+from appSITUweb import views as vw_pasajeros
+from django.conf.urls.static import static
+from django.conf import settings
 
 
 urlpatterns = [
     path('', home_view, name='home'),
     path('admin/', admin.site.urls),
-    path('pasajeros/', pasajeros, name='pasajeros'),
-    path('pasajerosEdit/<id>', pasajeros_edit, name='pasajerosEdit')
-]
+
+    path('pasajeros/', vw_pasajeros.pasajeros, name='pasajeros'),
+    path('pasajerosEdit/<id>', vw_pasajeros.pasajeros_edit, name='pasajerosEdit'),
+    path('pasajerosCreate', vw_pasajeros.pasajeros_create, name='pasajerosCreate'),
+    path('pasajerosDelete/<id>', vw_pasajeros.pasajeros_delete, name='pasajerosDelete'),
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
