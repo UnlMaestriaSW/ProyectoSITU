@@ -35,6 +35,9 @@ def pasajeros_create(request):
 
 
 def pasajeros_edit(request, id):
+    """
+    Funciona para editar
+    """
     pasajero = get_object_or_404(Pasajero, id=id)
     data = {
         'form': PasajeroFormulario(instance=pasajero)
@@ -49,6 +52,9 @@ def pasajeros_edit(request, id):
 
 
 def pasajeros_delete(request, id):
+    """
+    Funciona para eliminar
+    """
     pasajero = get_object_or_404(Pasajero, id=id)
 
     if pasajero:
